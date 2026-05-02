@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Training Video SOP — Standard Operating Procedure</title>
+  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ══════════════════════════════════════════════
+       CSS VARIABLES
+    ══════════════════════════════════════════════ */
+    :root {
+      --u-base:        #020b12;
+      --u-surface:     rgba(255,255,255,0.04);
+      --u-surface-md:  rgba(255,255,255,0.07);
+      --u-surface-hi:  rgba(255,255,255,0.11);
+      --u-border:      rgba(255,255,255,0.09);
+      --u-border-hi:   rgba(100,220,160,0.25);
+
+      --g-bright:   #00e082;
+      --g-mid:      #00b368;
+      --g-soft:     #2ea87b;
+      --g-muted:    #4d9e7a;
+      --g-pale:     #a0d8be;
+      --g-dim:      rgba(0,180,104,0.15);
+
+      --nb-blue:    rgba(56,130,246,0.18);
+      --nb-purple:  rgba(139,92,246,0.15);
+      --nb-cyan:    rgba(34,211,238,0.12);
+
+      --txt-hi:     #f0fdf8;
+      --txt-body:   #c4d9cf;
+      --txt-muted:  #7aaa92;
+      --txt-dim:    rgba(160,216,190,0.45);
+
+      --r-sm:  8px;
+      --r-md:  14px;
+      --r-lg:  20px;
+      --r-xl:  28px;
+
+      --glow-sm:     0 0 20px rgba(0,180,104,0.18);
+      --glow-md:     0 0 48px rgba(0,180,104,0.25);
+      --shadow-card: 0 4px 24px rgba(0,0,0,0.45);
+
+      --section-pad: clamp(80px,10vh,120px) clamp(20px,5vw,60px);
+    }
+
+    /* ══════════════════════════════════════════════
+       RESET & BASE
+    ══════════════════════════════════════════════ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      background: var(--u-base);
+      color: var(--txt-body);
+      overflow-x: hidden;
+      line-height: 1.72;
+    }
+
+    /* ══════════════════════════════════════════════
+       UNIVERSE BACKGROUND LAYERS
+    ══════════════════════════════════════════════ */
+
+    /* Layer 1 — nebula gradient (animated) */
+    .universe-bg {
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background:
+        radial-gradient(ellipse at 15% 25%, var(--nb-blue)   0%, transparent 45%),
+        radial-gradient(ellipse at 85% 70%, var(--nb-purple) 0%, transparent 45%),
+        radial-gradient(ellipse at 55% 50%, var(--nb-cyan)   0%, transparent 55%),
+        radial-gradient(ellipse at 30% 80%, rgba(0,180,104,0.10) 0%, transparent 40%),
+        var(--u-base);
+      filter: blur(48px);
+      animation: nebula-drift 22s ease-in-out infinite alternate;
+    }
+    @keyframes nebula-drift {
+      0%   { transform: translate(0,    0  ) scale(1);    filter: blur(48px); }
+      33%  { transform: translate(-30px,-20px) scale(1.06); filter: blur(52px); }
+      66%  { transform: translate(20px, -35px) scale(1.04); filter: blur(44px); }
+      100% { transform: translate(-45px,-15px) scale(1.09); filter: blur(50px); }
+    }
+
+    /* Layer 2 — fine star field */
+    .stars-sm {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image: radial-gradient(rgba(255,255,255,0.9) 1px, transparent 1px);
+      background-size: 120px 120px;
+      opacity: 0.07;
+      animation: stars-drift 90s linear infinite;
+    }
+
+    /* Layer 3 — bigger stars */
+    .stars-lg {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      background-image: radial-gradient(rgba(255,255,255,0.95) 1.5px, transparent 1.5px);
+      background-size: 280px 280px;
+      background-position: 60px 60px;
+      opacity: 0.05;
+      animation: stars-drift 140s linear infinite reverse;
+    }
+
+    @keyframes stars-drift {
+      from { transform: translateY(0); }
+      to   { transform: translateY(-300px); }
+    }
+
+    /* Layer 4 — floating glow orbs */
+    .glow-orb {
+      position: fixed;
+      z-index: -1;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(80px);
+      animation: orb-float 18s ease-in-out infinite alternate;
+    }
+    .glow-orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(0,180,104,0.12) 0%, transparent 70%);
+      top: -100px; left: -100px;
+    }
+    .glow-orb-2 {
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(56,130,246,0.10) 0%, transparent 70%);
+      bottom: -80px; right: -80px;
+      animation-delay: -9s;
+      animation-direction: alternate-reverse;
+    }
+    @keyframes orb-float {
+      0%   { transform: translate(0,    0  ) scale(1);    }
+      50%  { transform: translate(40px, 30px) scale(1.08); }
+      100% { transform: translate(-30px,50px) scale(0.95); }
+    }
+
+    /* Mouse glow */
+    .mouse-glow {
+      position: fixed;
+      width: 480px; height: 480px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,224,130,0.07) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: -1;
+      transform: translate(-50%, -50%);
+      transition: left 0.9s ease, top 0.9s ease;
+      filter: blur(30px);
+    }
+
+    /* ══════════════════════════════════════════════
+       NAVIGATION
+    ══════════════════════════════════════════════ */
+    #nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 999;
+      background: rgba(2,11,18,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--u-border);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      height: 60px;
+      gap: 2px;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    #nav::-webkit-scrollbar { display: none; }
+    .nav-brand {
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--g-bright);
+      letter-spacing: 3px;
+      white-space: nowrap;
+      margin-right: 20px;
+      flex-shrink: 0;
+      text-shadow: 0 0 16px rgba(0,224,130,0.5);
+    }
+    .nav-link {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--txt-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      padding: 6px 14px;
+      border-radius: 30px;
+      white-space: nowrap;
+      transition: background .22s, color .22s;
+      flex-shrink: 0;
+    }
+    .nav-link:hover, .nav-link.active {
+      background: rgba(0,180,104,0.14);
+      color: var(--g-bright);
+    }
+
+    /* ══════════════════════════════════════════════
+       SECTIONS BASE
+    ══════════════════════════════════════════════ */
+    section {
+      min-height: 100vh;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--section-pad);
+      position: relative;
+      overflow: hidden;
+    }
+    section + section::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 10%; right: 10%;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--u-border-hi), transparent);
+      pointer-events: none;
+    }
+    .section-inner {
+      width: 100%;
+      max-width: 1280px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* Scroll animations */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(36px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+    .fade-in { opacity: 0; transition: opacity 0.65s ease; }
+    .fade-in.visible { opacity: 1; }
+    .stagger-child { opacity: 0; transform: translateY(22px); }
+
+    /* ══════════════════════════════════════════════
+       TYPOGRAPHY HELPERS
+    ══════════════════════════════════════════════ */
+    .eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--g-bright);
+      margin-bottom: 16px;
+      text-shadow: 0 0 12px rgba(0,224,130,0.4);
+    }
+    .section-title {
+      font-size: clamp(32px, 4.5vw, 54px);
+      font-weight: 800;
+      color: var(--txt-hi);
+      line-height: 1.12;
+      letter-spacing: -0.5px;
+      margin-bottom: 12px;
+    }
+    .section-sub {
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: var(--txt-muted);
+      font-weight: 400;
+      margin-bottom: 48px;
+      line-height: 1.6;
+      max-width: 600px;
+    }
+    .divider {
+      width: 56px;
+      height: 3px;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--g-bright), transparent);
+      box-shadow: 0 0 12px rgba(0,224,130,0.5);
+      margin: 14px 0 40px;
+    }
+
+    /* Glass card base */
+    .glass {
+      background: var(--u-surface);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid var(--u-border);
+      border-radius: var(--r-lg);
+    }
+
+    /* ══════════════════════════════════════════════
+       SLIDE 1 — HERO
+    ══════════════════════════════════════════════ */
+    #slide-1 { background: transparent; }
+    #slide-1::after {
+      content: '';
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      width: 800px; height: 800px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,180,104,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--g-pale);
+      margin-bottom: 24px;
+    }
+    .hero-dot {
+      width: 8px; height: 8px;
+      border-radius: 50%;
+      background: var(--g-bright);
+      box-shadow: 0 0 12px rgba(0,224,130,0.8);
+      animation: pulse-dot 2.2s ease-in-out infinite;
+      flex-shrink: 0;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(0,224,130,0.6); }
+      50%       { box-shadow: 0 0 0 10px rgba(0,224,130,0); }
+    }
+    .hero-title {
+      font-size: clamp(72px, 13vw, 130px);
+      font-weight: 900;
+      color: var(--txt-hi);
+      line-height: 0.92;
+      letter-spacing: -4px;
+      margin-bottom: 24px;
+    }
+    .hero-title-accent {
+      color: transparent;
+      -webkit-text-stroke: 2px rgba(0,224,130,0.55);
+    }
+    .hero-subtitle {
+      font-family: 'Space Mono', monospace;
+      font-size: clamp(13px, 1.4vw, 16px);
+      color: var(--g-muted);
+      letter-spacing: 2px;
+      margin-bottom: 48px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--txt-hi);
+    }
+    .hero-badge-icon {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: rgba(0,224,130,0.15);
+      border: 1px solid rgba(0,224,130,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+    }
+
+    /* ══════════════════════════════════════════════
+       SLIDE 2 — SOP Là Gì
+    ══════════════════════════════════════════════ */
+    .slide-header-box {
+      background: linear-gradient(135deg, rgba(0,180,104,0.18) 0%, rgba(13,92,70,0.25) 100%);
+      border: 1px solid var(--u-border-hi);
+      backdrop-filter: blur(16px);
+      border-radius: var(--r-xl);
+      padding: 40px 48px;
+      margin-bottom: 48px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--glow-sm);
+    }
+    .slide-header-box::after {
+      content: 'SOP';
+      position: absolute;
+      right: -10px; top: 50%;
+      transform: translateY(-50%);
+      font-size: 120px;
+      font-weight: 900;
+      color: rgba(0,224,130,0.05);
+      font-family: 'Space Mono', monospace;
+      letter-spacing: -8px;
+      pointer-events: none;
+      line-height: 1;
+    }
+    .slide-header-box h2 {
+      font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 800;
+      color: var(--txt-hi);
+      margin-bottom: 10px;
+      letter-spacing: -0.5px;
+    }
+    .slide-header-box p {
+      color: var(--txt-body);
+      font-size: clamp(14px, 1.5vw, 16px);
+      max-width: 560px;
+    }
+    .build-on-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--txt-muted);
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .acronym-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+    .acronym-card {
+      border-radius: var(--r-md);
+      padding: 22px 24px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: background .3s, transform .3s, box-shadow .3s;
+    }
+    .acronym-card:hover {
+      background: var(--u-surface-hi) !important;
+      transform: translateY(-3px);
+      box-shadow: var(--glow-sm);
+    }
+    .acronym-badge {
+      background: linear-gradient(135deg, var(--g-soft), var(--g-mid));
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 12px;
+      padding: 8px 14px;
+      border-radius: var(--r-sm);
+      flex-shrink: 0;
+      letter-spacing: 1px;
+      box-shadow: 0 0 16px rgba(0,180,104,0.3);
+    }
+    .acronym-text strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--g-bright);
+      margin-bottom: 4px;
+      line-height: 1.3;
+    }
+    .acronym-text span {
+      font-size: 13px;
+      color: var(--txt-muted);
+    }
+    .purpose-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+    .pill {
+      border: 1.5px solid var(--g-muted);
+      color: var(--g-pale);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 10px 22px;
+      border-radius: 50px;
+      background: rgba(0,180,104,0.08);
+      transition: background .25s, border-color .25s, box-shadow .25s;
+      cursor: default;
+    }
+    .pill:hover {
+      background: rgba(0,180,104,0.2);
+      border-color: var(--g-bright);
+      box-shadow: 0 0 20px rgba(0,180,104,0.2);
+    }
+
+    /* ══════════════════════════════════════════════
+       SLIDE 3 — Bố Cục
+    ══════════════════════════════════════════════ */
+    .flow-row {
+      display: flex;
+      align-items: stretch;
+      gap: 0;
+      margin-top: 40px;
+    }
+    .flow-card {
+      flex: 1;
+      border-radius: var(--r-lg);
+      padding: 36px 28px;
+      border: 1px solid var(--u-border);
+      background: var(--u-surface);
+      backdrop-filter: blur(12px);
+      transition: background .3s, transform .3s, box-shadow .3s;
+    }
+    .flow-card:hover {
+      background: var(--u-surface-md);
+      transform: translateY(-5px);
+      box-shadow: var(--glow-sm);
+      border-color: var(--u-border-hi);
+    }
+    .flow-num {
+      width: 44px; height: 44px;
+      background: linear-gradient(135deg, var(--g-soft), var(--g-mid));
+      color: #fff;
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 16px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 20px rgba(0,180,104,0.35);
+    }
+    .flow-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--txt-hi);
+      margin-bottom: 18px;
+      letter-spacing: 0.5px;
+    }
+    .flow-items { list-style: none; }
+    .flow-items li {
+      font-size: 14px;
+      color: var(--txt-body);
+      padding: 9px 0;
+      border-bottom: 1px solid var(--u-border);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .flow-items li:last-child { border-bottom: none; }
+    .flow-items li::before {
+      content: '';
+      width: 5px; height: 5px;
+      min-width: 5px;
+      background: var(--g-bright);
+      border-radius: 50%;
+      margin-top: 8px;
+      flex-shrink: 0;
+      box-shadow: 0 0 6px rgba(0,224,130,0.6);
+    }
+    .flow-connector {
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      flex-shrink: 0;
+      align-self: center;
+    }
+    .flow-connector-inner {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: rgba(0,180,104,0.1);
+      border: 1px solid var(--u-border-hi);
+      display: flex; align-items: center; justify-content: center;
+      color: var(--g-bright);
+      font-size: 16px;
+      box-shadow: 0 0 12px rgba(0,180,104,0.15);
+    }
+
+    /* ══════════════════════════════════════════════
+       SLIDE 4 — Lưu Ý
+    ══════════════════════════════════════════════ */
+    .notice-header {
+      font-size: clamp(28px, 4vw, 46px);
+      font-weight: 800;
+      color: var(--txt-hi);
+      margin-bottom: 48px;
+      letter-spacing: -0.5px;
+    }
+    .rules-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-bottom: 28px;
+    }
+    .rule-card {
+      border-radius: var(--r-lg);
+      padding: 30px 26px;
+      border: 1px solid var(--u-border);
+      border-top: 3px solid var(--g-soft);
+      background: var(--u-surface);
+      backdrop-filter: blur(12px);
+      transition: background .3s, transform .3s, box-shadow .3s;
+    }
+    .rule-card:hover {
+      background: var(--u-surface-md);
+      transform: translateY(-4px);
+      box-shadow: 0 0 40px rgba(0,180,104,0.12);
+      border-color: var(--u-border-hi);
+    }
+    .rule-tag {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      color: var(--g-muted);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .rule-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--txt-hi);
+      margin-bottom: 10px;
+      line-height: 1.3;
+    }
+    .rule-body {
+      font-size: 14px;
+      color: var(--txt-body);
+      line-height: 1.7;
+    }
+    .notice-footer {
+      background: rgba(0,180,104,0.10);
+      border: 1.5px solid rgba(0,224,130,0.3);
+      border-radius: var(--r-md);
+      padding: 20px 26px;
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--g-pale);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 0 24px rgba(0,180,104,0.1);
+    }
+
+    /* ══════════════════════════════════════════════
+       SLIDE 5 — Kỹ Thuật
+    ══════════════════════════════════════════════ */
+    .tech-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 22px;
+      margin-top: 48px;
+    }
+    .tech-card {
+      border-radius: var(--r-lg);
+      padding: 34px 30px;
+      border: 1px solid var(--u-border);
+      background: var(--u-surface);
+      backdrop-filter: blur(12px);
+      transition: background .3s, transform .3s, box-shadow .3s;
+    }
+    .tech-card:hover {
+      background: var(--u-surface-md);
+      transform: translateY(-4px);
+      box-shadow: var(--glow-sm);
+      border-color: var(--u-border-hi);
+    }
+    .tech-icon-title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: linear-gradient(135deg, rgba(0,180,104,0.25), rgba(13,92,70,0.30));
+      border: 1px solid var(--u-border-hi);
+      color: var(--txt-hi);
+      border-radius: var(--r-md);
+      padding: 16px 20px;
+      margin-bottom: 26px;
+      font-weight: 700;
+      font-size: 16px;
+    }
+    .tech-icon-title span { font-size: 22px; }
+    .tech-rows { list-style: none; }
+    .tech-rows li {
+      padding: 11px 0;
+      border-bottom: 1px solid var(--u-border);
+      font-size: 14px;
+      color: var(--txt-body);
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      line-height: 1.5;
+    }
+    .tech-rows li:last-child { border-bottom: none; }
+    .tech-rows li::before {
+      content: '✓';
+      color: var(--g-bright);
+      font-weight: 700;
+      font-size: 13px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .tech-spec { margin-top: 8px; }
+    .spec-row {
+      padding: 14px 16px;
+      border-radius: var(--r-sm);
+      margin-bottom: 10px;
+      border: 1px solid var(--u-border);
+    }
+    .spec-row.min { background: rgba(0,180,104,0.07); }
+    .spec-row.rec { background: rgba(0,180,104,0.13); border-color: var(--u-border-hi); }
+    .spec-label {
+      font-weight: 700;
+      color: var(--txt-muted);
+      font-size: 10px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .spec-val {
+      font-weight: 700;
+      color: var(--g-bright);
+      font-size: 15px;
+    }
+    .spec-desc {
+      font-size: 12px;
+      color: var(--txt-muted);
+      margin-top: 2px;
+    }
+    .tech-note {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--txt-muted);
+      font-style: italic;
+      padding-left: 14px;
+      border-left: 2px solid var(--g-soft);
+      line-height: 1.6;
+    }
+
+    /* ══════════════════════════════════════════════
+       SLIDE 6 — Công Cụ
+    ══════════════════════════════════════════════ */
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+      margin-top: 48px;
+    }
+    .tool-card {
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      border: 1px solid var(--u-border);
+      background: var(--u-surface);
+      backdrop-filter: blur(12px);
+      transition: background .3s, transform .3s, box-shadow .3s;
+    }
+    .tool-card:hover {
+      background: var(--u-surface-md);
+      transform: translateY(-5px);
+      box-shadow: var(--glow-sm);
+      border-color: var(--u-border-hi);
+    }
+    .tool-header {
+      background: linear-gradient(135deg, rgba(0,180,104,0.22), rgba(13,92,70,0.28));
+      border-bottom: 1px solid var(--u-border-hi);
+      padding: 22px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .tool-num {
+      width: 36px; height: 36px;
+      background: rgba(0,224,130,0.15);
+      border: 1px solid rgba(0,224,130,0.3);
+      color: var(--g-bright);
+      font-family: 'Space Mono', monospace;
+      font-weight: 700;
+      font-size: 14px;
+      border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .tool-name {
+      font-size: 17px;
+      font-weight: 800;
+      color: var(--txt-hi);
+      line-height: 1.2;
+    }
+    .tool-role {
+      font-size: 11px;
+      color: var(--g-muted);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-top: 2px;
+    }
+    .tool-body { padding: 22px; }
+    .tool-free {
+      font-family: 'Space Mono', monospace;
+      font-size: 11px;
+      color: var(--txt-dim);
+      margin-bottom: 16px;
+    }
+    .tool-features { list-style: none; }
+    .tool-features li {
+      font-size: 13px;
+      color: var(--txt-body);
+      padding: 7px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      border-bottom: 1px solid var(--u-border);
+      line-height: 1.5;
+    }
+    .tool-features li:last-child { border-bottom: none; }
+    .tool-features li::before {
+      content: '✓';
+      color: var(--g-bright);
+      font-weight: 700;
+      font-size: 12px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* ══════════════════════════════════════════════
+       SLIDES 7 & 8 — Keywords
+    ══════════════════════════════════════════════ */
+    .kw-layout {
+      display: grid;
+      grid-template-columns: 360px 1fr;
+      gap: 48px;
+      align-items: center;
+      margin-top: 48px;
+    }
+    .kw-tool-card {
+      background: linear-gradient(145deg, rgba(0,180,104,0.18), rgba(0,60,40,0.35));
+      border: 1px solid var(--u-border-hi);
+      border-radius: var(--r-xl);
+      padding: 44px 36px;
+      color: var(--txt-hi);
+      position: relative;
+      overflow: hidden;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--glow-md);
+    }
+    .kw-tool-card::before {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,224,130,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .kw-tool-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 72px;
+      font-weight: 700;
+      color: rgba(0,224,130,0.15);
+      line-height: 1;
+      margin-bottom: 16px;
+      letter-spacing: -4px;
+    }
+    .kw-tool-name {
+      font-size: 30px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    .kw-tool-role {
+      font-size: 13px;
+      color: var(--g-soft);
+      margin-bottom: 16px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .kw-tool-platform {
+      font-size: 11px;
+      color: var(--txt-dim);
+      font-family: 'Space Mono', monospace;
+    }
+    .kw-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      color: var(--g-bright);
+      text-transform: uppercase;
+      margin-bottom: 18px;
+      text-shadow: 0 0 10px rgba(0,224,130,0.4);
+    }
+    .kw-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+    .kw-tag {
+      background: rgba(0,180,104,0.10);
+      border: 1px solid var(--g-muted);
+      color: var(--g-pale);
+      font-family: 'Space Mono', monospace;
+      font-size: 12px;
+      font-weight: 600;
+      padding: 10px 16px;
+      border-radius: var(--r-sm);
+      transition: background .22s, border-color .22s, box-shadow .22s;
+      cursor: default;
+    }
+    .kw-tag:hover {
+      background: rgba(0,180,104,0.22);
+      border-color: var(--g-bright);
+      box-shadow: 0 0 16px rgba(0,224,130,0.2);
+    }
+    .kw-note {
+      font-size: 15px;
+      color: var(--txt-body);
+      line-height: 1.7;
+      padding: 20px 22px;
+      background: var(--u-surface);
+      border: 1px solid var(--u-border);
+      border-left: 3px solid var(--g-soft);
+      border-radius: var(--r-md);
+      backdrop-filter: blur(8px);
+    }
+
+    /* ══════════════════════════════════════════════
+       SLIDE 9 — CTA
+    ══════════════════════════════════════════════ */
+    #slide-9-glow {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      background:
+        radial-gradient(ellipse at 50% 40%, rgba(0,180,104,0.20) 0%, transparent 55%),
+        radial-gradient(ellipse at 20% 80%, rgba(56,130,246,0.10) 0%, transparent 45%);
+      pointer-events: none;
+      filter: blur(40px);
+    }
+    .cta-inner {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .cta-eyebrow {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 5px;
+      color: var(--g-soft);
+      text-transform: uppercase;
+      margin-bottom: 24px;
+      text-shadow: 0 0 12px rgba(0,224,130,0.3);
+    }
+    .cta-title {
+      font-size: clamp(48px, 8vw, 100px);
+      font-weight: 900;
+      color: var(--txt-hi);
+      line-height: 1;
+      letter-spacing: -3px;
+      margin-bottom: 20px;
+    }
+    .cta-title-accent {
+      color: var(--g-bright);
+      text-shadow: 0 0 40px rgba(0,224,130,0.5);
+    }
+    .cta-sub {
+      font-size: clamp(15px, 1.8vw, 18px);
+      color: var(--txt-muted);
+      margin-bottom: 56px;
+      font-weight: 400;
+    }
+    .cta-tools {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 60px;
+    }
+    .cta-tool-pill {
+      background: var(--u-surface);
+      border: 1px solid var(--u-border);
+      color: var(--txt-body);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 12px 24px;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      backdrop-filter: blur(10px);
+      transition: background .25s, border-color .25s, box-shadow .25s;
+    }
+    .cta-tool-pill:hover {
+      background: var(--u-surface-md);
+      border-color: var(--u-border-hi);
+      box-shadow: 0 0 20px rgba(0,180,104,0.12);
+    }
+    .cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--g-bright);
+      color: #020b12;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: 18px;
+      font-weight: 800;
+      padding: 20px 56px;
+      border-radius: 60px;
+      cursor: pointer;
+      border: none;
+      letter-spacing: 0.3px;
+      box-shadow: 0 0 40px rgba(0,224,130,0.45), 0 8px 32px rgba(0,0,0,0.4);
+      transition: transform .25s, box-shadow .25s, background .25s;
+      text-decoration: none;
+    }
+    .cta-btn:hover {
+      transform: translateY(-5px) scale(1.04);
+      box-shadow: 0 0 70px rgba(0,224,130,0.65), 0 16px 48px rgba(0,0,0,0.5);
+      background: #00f592;
+    }
+    .cta-btn:active { transform: translateY(-2px) scale(1.01); }
+    .play-icon {
+      width: 36px; height: 36px;
+      background: rgba(2,11,18,0.3);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #020b12;
+      font-size: 12px;
+      flex-shrink: 0;
+    }
+    .trainer-badge {
+      margin-top: 56px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--txt-dim);
+    }
+    .trainer-badge strong { color: var(--txt-muted); font-weight: 600; }
+
+    /* ══════════════════════════════════════════════
+       RESPONSIVE
+    ══════════════════════════════════════════════ */
+    @media (max-width: 1024px) {
+      .rules-grid { grid-template-columns: repeat(2,1fr); }
+      .tools-grid { grid-template-columns: repeat(2,1fr); }
+      .kw-layout  { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      :root { --section-pad: 80px 20px 60px; }
+      .acronym-grid { grid-template-columns: 1fr; }
+      .flow-row     { flex-direction: column; }
+      .flow-connector { transform: rotate(90deg); padding: 4px 0; justify-content: center; }
+      .tech-grid    { grid-template-columns: 1fr; }
+      .rules-grid   { grid-template-columns: 1fr; }
+      .tools-grid   { grid-template-columns: 1fr; }
+      .kw-layout    { grid-template-columns: 1fr; }
+      .cta-tools    { flex-direction: column; align-items: center; }
+      .slide-header-box { padding: 28px; }
+      .slide-header-box::after { display: none; }
+      .glow-orb-1, .glow-orb-2 { width: 300px; height: 300px; }
+    }
+    @media (max-width: 480px) {
+      .hero-title { font-size: 64px; letter-spacing: -3px; }
+      .nav-link   { font-size: 11px; padding: 5px 10px; }
+      .cta-title  { letter-spacing: -2px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══ UNIVERSE BACKGROUND ══ -->
+  <div class="universe-bg"></div>
+  <div class="stars-sm"></div>
+  <div class="stars-lg"></div>
+  <div class="glow-orb glow-orb-1"></div>
+  <div class="glow-orb glow-orb-2"></div>
+  <div class="mouse-glow" id="mouseGlow"></div>
+
+  <!-- ─── Navigation ─── -->
+  <nav id="nav">
+    <span class="nav-brand">VIDEO SOP</span>
+    <button class="nav-link" data-target="slide-1">Giới thiệu</button>
+    <button class="nav-link" data-target="slide-2">SOP là gì?</button>
+    <button class="nav-link" data-target="slide-3">Bố cục</button>
+    <button class="nav-link" data-target="slide-4">Lưu ý</button>
+    <button class="nav-link" data-target="slide-5">Kỹ thuật</button>
+    <button class="nav-link" data-target="slide-6">Công cụ</button>
+    <button class="nav-link" data-target="slide-7">Keyword CapCut</button>
+    <button class="nav-link" data-target="slide-8">Keyword Canva</button>
+    <button class="nav-link" data-target="slide-9">Bắt đầu</button>
+  </nav>
+
+  <!-- ─── Slide 1: Hero ─── -->
+  <section id="slide-1">
+    <div class="section-inner">
+      <div class="hero-content">
+        <div class="hero-eyebrow fade-up">
+          <span class="hero-dot"></span>
+          Training session
+        </div>
+        <h1 class="hero-title fade-up" style="transition-delay:.1s">
+          VIDEO<br><span class="hero-title-accent">SOP</span>
+        </h1>
+        <p class="hero-subtitle fade-up" style="transition-delay:.2s">Standard Operating Procedure</p>
+        <div class="hero-badge glass fade-up" style="transition-delay:.3s">
+          <span class="hero-badge-icon">👤</span>
+          Trainer: Trần Lộc Đỉnh
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Slide 2: SOP Là Gì ─── -->
+  <section id="slide-2">
+    <div class="section-inner">
+      <p class="eyebrow fade-up">Training Edit Video SOP</p>
+      <div class="slide-header-box fade-up" style="transition-delay:.1s">
+        <h2>SOP Là Gì?</h2>
+        <p>Hướng dẫn chuẩn hóa công việc — đảm bảo an toàn và vận hành đúng tiêu chuẩn trong nhà máy.</p>
+      </div>
+      <p class="build-on-label fade-up" style="transition-delay:.2s">XÂY DỰNG DỰA TRÊN:</p>
+      <div class="acronym-grid">
+        <div class="acronym-card glass stagger-child">
+          <span class="acronym-badge">SHE</span>
+          <div class="acronym-text">
+            <strong>Safety, Health &amp; Environment</strong>
+            <span>An toàn, Sức khỏe &amp; Môi trường</span>
+          </div>
+        </div>
+        <div class="acronym-card glass stagger-child">
+          <span class="acronym-badge">JHA</span>
+          <div class="acronym-text">
+            <strong>Job Hazard Analysis</strong>
+            <span>Phân tích mối nguy nghề nghiệp</span>
+          </div>
+        </div>
+        <div class="acronym-card glass stagger-child">
+          <span class="acronym-badge">HIRA</span>
+          <div class="acronym-text">
+            <strong>Hazard ID &amp; Risk Assessment</strong>
+            <span>Nhận diện &amp; đánh giá rủi ro</span>
+          </div>
+        </div>
+        <div class="acronym-card glass stagger-child">
+          <span class="acronym-badge">WI</span>
+          <div class="acronym-text">
+            <strong>Work Instruction</strong>
+            <span>Hướng dẫn công việc</span>
+          </div>
+        </div>
+      </div>
+      <div class="purpose-pills fade-up" style="transition-delay:.45s">
+        <span class="pill">✦ An toàn lao động</span>
+        <span class="pill">✦ Chuẩn hóa thao tác</span>
+        <span class="pill">✦ Đào tạo nhân viên</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Slide 3: Bố Cục Video SOP ─── -->
+  <section id="slide-3">
+    <div class="section-inner">
+      <p class="eyebrow fade-up">Training Edit Video SOP</p>
+      <h2 class="section-title fade-up" style="transition-delay:.1s">Bố Cục Video SOP</h2>
+      <p class="section-sub fade-up" style="transition-delay:.15s">Cấu trúc 3 phần</p>
+      <div class="flow-row">
+        <div class="flow-card stagger-child">
+          <div class="flow-num">1</div>
+          <div class="flow-name">INTRO</div>
+          <ul class="flow-items">
+            <li>Tên chủ đề video</li>
+            <li>Mục tiêu của chủ đề</li>
+            <li>Phạm vi áp dụng</li>
+          </ul>
+        </div>
+        <div class="flow-connector stagger-child"><div class="flow-connector-inner">→</div></div>
+        <div class="flow-card stagger-child">
+          <div class="flow-num">2</div>
+          <div class="flow-name">NỘI DUNG CHÍNH</div>
+          <ul class="flow-items">
+            <li>Giới thiệu công việc</li>
+            <li>Chuẩn bị (dựa theo tiêu chuẩn)</li>
+            <li>Các bước thực hiện</li>
+            <li>Kiểm tra sau khi thực hiện</li>
+          </ul>
+        </div>
+        <div class="flow-connector stagger-child"><div class="flow-connector-inner">→</div></div>
+        <div class="flow-card stagger-child">
+          <div class="flow-num">3</div>
+          <div class="flow-name">OUTRO</div>
+          <ul class="flow-items">
+            <li>Tóm tắt nội dung</li>
+            <li>Nhắc lại an toàn</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Slide 4: Lưu Ý ─── -->
+  <section id="slide-4">
+    <div class="section-inner">
+      <p class="eyebrow fade-up">Nguyên tắc quan trọng cần tuân thủ</p>
+      <div class="notice-header fade-up" style="transition-delay:.1s">Lưu ý khi làm video SOP</div>
+      <div class="rules-grid">
+        <div class="rule-card stagger-child">
+          <p class="rule-tag">JHA / HIRA / WI</p>
+          <p class="rule-title">Bám sát tài liệu gốc</p>
+          <p class="rule-body">Nội dung phải phản ánh đúng tiêu chuẩn đã được phê duyệt, không sáng tạo ngoài phạm vi.</p>
+        </div>
+        <div class="rule-card stagger-child">
+          <p class="rule-tag">Quy trình đã duyệt</p>
+          <p class="rule-title">Không tự ý thay đổi</p>
+          <p class="rule-body">Không rút gọn, thêm bước hay đảo thứ tự quy trình — dù thao tác có vẻ hợp lý hơn.</p>
+        </div>
+        <div class="rule-card stagger-child">
+          <p class="rule-tag">Tại vị trí làm việc</p>
+          <p class="rule-title">Quay đúng thực tế</p>
+          <p class="rule-body">Ghi hình chính xác thao tác thực tế tại chỗ làm — không diễn lại hay rút gọn bước.</p>
+        </div>
+      </div>
+      <div class="notice-footer fade-up" style="transition-delay:.5s">
+        👉&nbsp; Video SOP chỉ là hình thức trực quan hóa – không thay thế tài liệu gốc
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Slide 5: Yêu Cầu Kỹ Thuật ─── -->
+  <section id="slide-5">
+    <div class="section-inner">
+      <p class="eyebrow fade-up">Training Edit Video SOP</p>
+      <h2 class="section-title fade-up" style="transition-delay:.1s">Yêu Cầu Kỹ Thuật Khi Quay</h2>
+      <p class="section-sub fade-up" style="transition-delay:.15s">GÓC QUAY VÀ CHẤT LƯỢNG VIDEO</p>
+      <div class="tech-grid">
+        <div class="tech-card stagger-child">
+          <div class="tech-icon-title"><span>📹</span> Độ Phân Giải</div>
+          <div class="tech-spec">
+            <div class="spec-row min">
+              <div class="spec-label">TỐI THIỂU</div>
+              <div class="spec-val">1080p – 60fps trở lên</div>
+              <div class="spec-desc">Đảm bảo rõ nét khi chiếu</div>
+            </div>
+            <div class="spec-row rec">
+              <div class="spec-label">KHUYẾN KHÍCH</div>
+              <div class="spec-val">4K – 60fps trở lên</div>
+              <div class="spec-desc">Chi tiết sắc nét, chuyển động mượt</div>
+            </div>
+          </div>
+          <p class="tech-note">Dùng chân máy / gimbal để ổn định hình ảnh</p>
+        </div>
+        <div class="tech-card stagger-child">
+          <div class="tech-icon-title"><span>📷</span> Góc Quay &amp; Ánh Sáng</div>
+          <ul class="tech-rows">
+            <li>Bao quát toàn bộ thao tác — không bỏ sót</li>
+            <li>Cận cảnh tại các bước quan trọng</li>
+            <li>Không để vật cản che khuất tay/công cụ</li>
+            <li>Đủ sáng, không bị bóng ngược</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Slide 6: Công Cụ ─── -->
+  <section id="slide-6">
+    <div class="section-inner">
+      <p class="eyebrow fade-up">GỢI Ý TOOL XÂY DỰNG VIDEO</p>
+      <h2 class="section-title fade-up" style="transition-delay:.1s">Công Cụ</h2>
+      <div class="divider fade-in" style="transition-delay:.2s"></div>
+      <div class="tools-grid">
+        <div class="tool-card stagger-child">
+          <div class="tool-header">
+            <span class="tool-num">1</span>
+            <div><div class="tool-name">CapCut</div><div class="tool-role">Dựng INTRO</div></div>
+          </div>
+          <div class="tool-body">
+            <div class="tool-free">Miễn phí  •  Mobile/Desktop</div>
+            <ul class="tool-features">
+              <li>Tạo mở đầu ngắn, thu hút</li>
+              <li>Chèn text &amp; hiệu ứng cơ bản</li>
+              <li>Ghép clip, cắt ghép nhanh</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tool-card stagger-child">
+          <div class="tool-header">
+            <span class="tool-num">2</span>
+            <div><div class="tool-name">Canva</div><div class="tool-role">Dựng NỘI DUNG &amp; OUTRO</div></div>
+          </div>
+          <div class="tool-body">
+            <div class="tool-free">Miễn phí  •  Trình duyệt</div>
+            <ul class="tool-features">
+              <li>Dễ design, nhiều template</li>
+              <li>Xuất video tối thiểu FullHD</li>
+              <li>Cầu nối giữa Intro &amp; Voice</li>
+            </ul>
+          </div>
+        </div>
+        <div class="tool-card stagger-child">
+          <div class="tool-header">
+            <span class="tool-num">3</span>
+            <div><div class="tool-name">Google AI Studio</div><div class="tool-role">Tạo VOICE</div></div>
+          </div>
+          <div class="tool-body">
+            <div class="tool-free">Miễn phí  •  AI tự động</div>
+            <ul class="tool-features">
+              <li>Text-to-speech tiếng Việt</li>
+              <li>Giọng rõ ràng, tự nhiên</li>
+              <li>Nhiều lựa chọn về sắc độ voice</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Slide 7: Keyword CapCut ─── -->
+  <section id="slide-7">
+    <div class="section-inner">
+      <p class="eyebrow fade-up">GỢI Ý keyword để tìm các template</p>
+      <h2 class="section-title fade-up" style="transition-delay:.1s">Keyword tìm Template</h2>
+      <div class="divider fade-in" style="transition-delay:.2s"></div>
+      <div class="kw-layout">
+        <div class="kw-tool-card stagger-child">
+          <div class="kw-tool-num">01</div>
+          <div class="kw-tool-name">CapCut</div>
+          <div class="kw-tool-role">Dựng INTRO</div>
+          <div class="kw-tool-platform">Miễn phí  •  Mobile/Desktop</div>
+        </div>
+        <div class="kw-right stagger-child">
+          <p class="kw-label">Keyword gợi ý</p>
+          <div class="kw-tags">
+            <span class="kw-tag">"Intro vlog"</span>
+            <span class="kw-tag">"Intro cinematic"</span>
+            <span class="kw-tag">"Opening long"</span>
+            <span class="kw-tag">"Element video"</span>
+          </div>
+          <p class="kw-note">Dùng các keyword trên để tìm kiếm template phù hợp trong CapCut. Ghép clip, cắt ghép nhanh để tạo phần mở đầu chuyên nghiệp.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Slide 8: Keyword Canva ─── -->
+  <section id="slide-8">
+    <div class="section-inner">
+      <p class="eyebrow fade-up">GỢI Ý keyword để tìm các template</p>
+      <h2 class="section-title fade-up" style="transition-delay:.1s">Keyword tìm Template</h2>
+      <div class="divider fade-in" style="transition-delay:.2s"></div>
+      <div class="kw-layout">
+        <div class="kw-tool-card stagger-child">
+          <div class="kw-tool-num">02</div>
+          <div class="kw-tool-name">Canva</div>
+          <div class="kw-tool-role">Dựng NỘI DUNG &amp; OUTRO</div>
+          <div class="kw-tool-platform">Miễn phí  •  Trình duyệt</div>
+        </div>
+        <div class="kw-right stagger-child">
+          <p class="kw-label">Keyword gợi ý</p>
+          <div class="kw-tags">
+            <span class="kw-tag">"Presentation"</span>
+            <span class="kw-tag">"Statistical"</span>
+            <span class="kw-tag">"Map"</span>
+            <span class="kw-tag">"Chart"</span>
+            <span class="kw-tag">"Portfolio"</span>
+          </div>
+          <p class="kw-note">Dùng các keyword trên trong Canva để tìm template phù hợp cho nội dung và phần kết của video SOP.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── Slide 9: CTA ─── -->
+  <section id="slide-9">
+    <div id="slide-9-glow"></div>
+    <div class="section-inner">
+      <div class="cta-inner">
+        <p class="cta-eyebrow fade-up">Tiếp Theo</p>
+        <h2 class="cta-title fade-up" style="transition-delay:.1s">
+          XEM DEMO<br><span class="cta-title-accent">THỰC TẾ</span>
+        </h2>
+        <p class="cta-sub fade-up" style="transition-delay:.2s">Hướng dẫn edit từng bước trực tiếp trên phần mềm</p>
+        <div class="cta-tools fade-up" style="transition-delay:.3s">
+          <span class="cta-tool-pill">🎬 CapCut</span>
+          <span class="cta-tool-pill">🎨 Canva</span>
+          <span class="cta-tool-pill">🤖 Google AI Studio</span>
+        </div>
+        <div class="fade-up" style="transition-delay:.42s">
+          <a class="cta-btn" href="https://canva.link/7hyjv8984kwz83f" target="_blank" rel="noopener noreferrer">
+            <span class="play-icon">▶</span>
+            Bắt đầu
+          </a>
+        </div>
+        <div class="trainer-badge fade-up" style="transition-delay:.56s">
+          Trainer: <strong>Trần Lộc Đỉnh</strong>&nbsp;·&nbsp;Training Edit Video SOP
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── JavaScript ─── -->
+  <script>
+    /* Nav scroll */
+    document.querySelectorAll('.nav-link[data-target]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.getElementById(btn.dataset.target)?.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    /* Scroll animations */
+    const navLinks = document.querySelectorAll('.nav-link');
+    const scrollObs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        navLinks.forEach(l => l.classList.toggle('active', l.dataset.target === entry.target.id));
+        entry.target.querySelectorAll('.fade-up, .fade-in').forEach(el => el.classList.add('visible'));
+        entry.target.querySelectorAll('.stagger-child').forEach((el, i) => {
+          el.style.transition = `opacity .65s ease ${i*85}ms, transform .65s ease ${i*85}ms`;
+          requestAnimationFrame(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; });
+        });
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('section').forEach(s => scrollObs.observe(s));
+
+    /* Fire hero immediately */
+    window.addEventListener('load', () => {
+      const s1 = document.getElementById('slide-1');
+      if (!s1) return;
+      s1.querySelectorAll('.fade-up, .fade-in').forEach(el => el.classList.add('visible'));
+      s1.querySelectorAll('.stagger-child').forEach((el, i) => {
+        el.style.transition = `opacity .65s ease ${i*85}ms, transform .65s ease ${i*85}ms`;
+        setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 60);
+      });
+    });
+
+    /* Mouse-reactive glow */
+    const mg = document.getElementById('mouseGlow');
+    document.addEventListener('mousemove', e => {
+      mg.style.left = e.clientX + 'px';
+      mg.style.top  = e.clientY + 'px';
+    });
+  </script>
+</body>
+</html>
