@@ -154,23 +154,23 @@
     /* ══════════════════════════════════════════════
        NAVIGATION
     ══════════════════════════════════════════════ */
+    /* ══════════════════════════════════════════════
+       NAVBAR — GROUPED DROPDOWN
+    ══════════════════════════════════════════════ */
     #nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 999;
-      background: rgba(2,11,18,0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
+      background: rgba(2,11,18,0.88);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
       border-bottom: 1px solid var(--u-border);
       padding: 0 32px;
       display: flex;
       align-items: center;
       height: 60px;
-      gap: 2px;
-      overflow-x: auto;
-      scrollbar-width: none;
+      gap: 4px;
     }
-    #nav::-webkit-scrollbar { display: none; }
     .nav-brand {
       font-family: 'Space Mono', monospace;
       font-size: 12px;
@@ -178,13 +178,31 @@
       color: var(--g-bright);
       letter-spacing: 3px;
       white-space: nowrap;
-      margin-right: 20px;
+      margin-right: 24px;
       flex-shrink: 0;
       text-shadow: 0 0 16px rgba(0,224,130,0.5);
+      text-decoration: none;
     }
-    .nav-link {
+    .nav-divider {
+      width: 1px;
+      height: 20px;
+      background: var(--u-border);
+      margin: 0 8px;
+      flex-shrink: 0;
+    }
+    /* ── Group item (top-level) ── */
+    .nav-group {
+      position: relative;
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+    .nav-group-btn {
+      display: flex;
+      align-items: center;
+      gap: 5px;
       font-size: 12px;
-      font-weight: 500;
+      font-weight: 600;
       color: var(--txt-muted);
       background: none;
       border: none;
@@ -194,12 +212,144 @@
       border-radius: 30px;
       white-space: nowrap;
       transition: background .22s, color .22s;
+      letter-spacing: 0.3px;
+    }
+    .nav-group-btn .nav-chevron {
+      width: 12px;
+      height: 12px;
+      opacity: 0.5;
+      transition: transform .25s ease, opacity .22s;
       flex-shrink: 0;
     }
-    .nav-link:hover, .nav-link.active {
-      background: rgba(0,180,104,0.14);
+    .nav-group:hover .nav-group-btn,
+    .nav-group.active-group .nav-group-btn {
+      background: rgba(0,180,104,0.12);
       color: var(--g-bright);
     }
+    .nav-group:hover .nav-chevron,
+    .nav-group.active-group .nav-chevron {
+      opacity: 1;
+    }
+    .nav-group:hover .nav-chevron {
+      transform: rotate(180deg);
+    }
+    /* active group indicator dot */
+    .nav-group.active-group .nav-group-btn::before {
+      content: '';
+      display: inline-block;
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--g-bright);
+      box-shadow: 0 0 6px rgba(0,224,130,0.7);
+      margin-right: 4px;
+      flex-shrink: 0;
+    }
+
+    /* ── Dropdown panel ── */
+    .nav-dropdown {
+      position: absolute;
+      top: calc(100% + 10px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      min-width: 180px;
+      background: rgba(4,16,24,0.96);
+      border: 1px solid var(--u-border-hi);
+      border-radius: var(--r-md);
+      padding: 8px 6px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .22s ease, transform .22s ease;
+      box-shadow: 0 12px 40px rgba(0,0,0,0.6), 0 0 0 1px rgba(0,224,130,0.06);
+      backdrop-filter: blur(20px);
+    }
+    .nav-group:hover .nav-dropdown {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    /* small arrow tip */
+    .nav-dropdown::before {
+      content: '';
+      position: absolute;
+      top: -5px;
+      left: 50%;
+      transform: translateX(-50%) rotate(45deg);
+      width: 9px; height: 9px;
+      background: rgba(4,16,24,0.96);
+      border-left: 1px solid var(--u-border-hi);
+      border-top: 1px solid var(--u-border-hi);
+    }
+    /* ── Dropdown items ── */
+    .nav-link {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      font-size: 12.5px;
+      font-weight: 500;
+      color: var(--txt-muted);
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      padding: 9px 14px;
+      border-radius: 8px;
+      white-space: nowrap;
+      transition: background .18s, color .18s, padding-left .18s;
+      text-align: left;
+    }
+    .nav-link .nav-link-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--g-soft);
+      opacity: 0;
+      transition: opacity .18s;
+      flex-shrink: 0;
+    }
+    .nav-link:hover {
+      background: rgba(0,180,104,0.10);
+      color: var(--txt-hi);
+      padding-left: 18px;
+    }
+    .nav-link:hover .nav-link-dot { opacity: 1; }
+    .nav-link.active {
+      background: rgba(0,224,130,0.12);
+      color: var(--g-bright);
+    }
+    .nav-link.active .nav-link-dot {
+      opacity: 1;
+      background: var(--g-bright);
+      box-shadow: 0 0 6px rgba(0,224,130,0.7);
+    }
+
+    /* ── CTA button (standalone) ── */
+    .nav-cta {
+      margin-left: auto;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--u-base);
+      background: var(--g-bright);
+      border: none;
+      cursor: pointer;
+      font-family: 'Be Vietnam Pro', sans-serif;
+      padding: 7px 18px;
+      border-radius: 30px;
+      white-space: nowrap;
+      letter-spacing: 0.5px;
+      box-shadow: 0 0 18px rgba(0,224,130,0.30);
+      transition: background .22s, box-shadow .22s, transform .15s;
+    }
+    .nav-cta:hover {
+      background: #00f590;
+      box-shadow: 0 0 28px rgba(0,224,130,0.50);
+      transform: translateY(-1px);
+    }
+    .nav-cta:active { transform: translateY(0); }
+    .nav-cta-icon { font-size: 10px; }
 
     /* ══════════════════════════════════════════════
        SECTIONS BASE
@@ -898,6 +1048,106 @@
     /* ══════════════════════════════════════════════
        SLIDE 9 — CTA
     ══════════════════════════════════════════════ */
+
+    /* ══════════════════════════════════════════════
+       SLIDE VOICE — KEYWORD GOOGLE AI STUDIO
+    ══════════════════════════════════════════════ */
+    .voice-params {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+    .voice-param-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 14px 18px;
+      background: var(--u-surface);
+      border: 1px solid var(--u-border);
+      border-left: 3px solid var(--g-mid);
+      border-radius: var(--r-md);
+      backdrop-filter: blur(8px);
+    }
+    .voice-param-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--g-bright);
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      white-space: nowrap;
+      padding-top: 2px;
+      min-width: 100px;
+      text-shadow: 0 0 8px rgba(0,224,130,0.35);
+    }
+    .voice-param-desc {
+      font-size: 14px;
+      color: var(--txt-body);
+      line-height: 1.6;
+    }
+    .voice-prompt-block {
+      background: linear-gradient(135deg, rgba(0,180,104,0.06), rgba(0,60,40,0.18));
+      border: 1px solid var(--u-border-hi);
+      border-radius: var(--r-lg);
+      padding: 24px 26px;
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+    }
+    .voice-prompt-block::before {
+      content: '';
+      position: absolute;
+      top: -30px; right: -30px;
+      width: 160px; height: 160px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0,224,130,0.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .voice-prompt-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: 'Space Mono', monospace;
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--g-bright);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 14px;
+      text-shadow: 0 0 10px rgba(0,224,130,0.4);
+    }
+    .voice-prompt-icon { font-size: 14px; color: var(--g-bright); }
+    .voice-prompt-text {
+      font-size: 14px;
+      color: var(--txt-muted);
+      margin-bottom: 14px;
+      line-height: 1.65;
+    }
+    .voice-prompt-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .voice-prompt-list li {
+      font-size: 13.5px;
+      font-style: italic;
+      color: var(--g-pale);
+      line-height: 1.6;
+      padding-left: 18px;
+      position: relative;
+    }
+    .voice-prompt-list li::before {
+      content: '\2014';
+      position: absolute;
+      left: 0;
+      color: var(--g-soft);
+      font-style: normal;
+    }
+
     #slide-9-glow {
       position: absolute;
       inset: 0;
@@ -1052,15 +1302,70 @@
   <!-- ─── Navigation ─── -->
   <nav id="nav">
     <span class="nav-brand">VIDEO SOP</span>
-    <button class="nav-link" data-target="slide-1">Giới thiệu</button>
-    <button class="nav-link" data-target="slide-2">SOP là gì?</button>
-    <button class="nav-link" data-target="slide-3">Bố cục</button>
-    <button class="nav-link" data-target="slide-4">Lưu ý</button>
-    <button class="nav-link" data-target="slide-5">Kỹ thuật</button>
-    <button class="nav-link" data-target="slide-6">Công cụ</button>
-    <button class="nav-link" data-target="slide-7">Keyword CapCut</button>
-    <button class="nav-link" data-target="slide-8">Keyword Canva</button>
-    <button class="nav-link" data-target="slide-9">Bắt đầu</button>
+    <div class="nav-divider"></div>
+
+    <!-- Group: Introduction -->
+    <div class="nav-group" data-group="intro">
+      <button class="nav-group-btn" aria-haspopup="true">
+        Introduction
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown">
+        <button class="nav-link" data-target="slide-1"><span class="nav-link-dot"></span>Giới thiệu</button>
+        <button class="nav-link" data-target="slide-2"><span class="nav-link-dot"></span>SOP là gì?</button>
+      </div>
+    </div>
+
+    <!-- Group: Content -->
+    <div class="nav-group" data-group="content">
+      <button class="nav-group-btn" aria-haspopup="true">
+        Content
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown">
+        <button class="nav-link" data-target="slide-3"><span class="nav-link-dot"></span>Bố cục</button>
+        <button class="nav-link" data-target="slide-4"><span class="nav-link-dot"></span>Lưu ý</button>
+      </div>
+    </div>
+
+    <!-- Group: Technical -->
+    <div class="nav-group" data-group="technical">
+      <button class="nav-group-btn" aria-haspopup="true">
+        Technical
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown">
+        <button class="nav-link" data-target="slide-5"><span class="nav-link-dot"></span>Kỹ thuật</button>
+        <button class="nav-link" data-target="slide-6"><span class="nav-link-dot"></span>Công cụ</button>
+      </div>
+    </div>
+
+    <!-- Group: Keywords -->
+    <div class="nav-group" data-group="keywords">
+      <button class="nav-group-btn" aria-haspopup="true">
+        Keywords
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown">
+        <button class="nav-link" data-target="slide-7"><span class="nav-link-dot"></span>CapCut</button>
+        <button class="nav-link" data-target="slide-8"><span class="nav-link-dot"></span>Canva</button>
+        <button class="nav-link" data-target="slide-voice"><span class="nav-link-dot"></span>Voice</button>
+      </div>
+    </div>
+
+    <!-- CTA standalone -->
+    <button class="nav-cta" data-target="slide-9">
+      <span class="nav-cta-icon">▶</span>
+      Bắt đầu
+    </button>
   </nav>
 
   <!-- ─── Slide 1: Hero ─── -->
@@ -1110,7 +1415,7 @@
         <div class="acronym-card glass stagger-child">
           <span class="acronym-badge">HIRA</span>
           <div class="acronym-text">
-            <strong>Hazard ID &amp; Risk Assessment</strong>
+            <strong>Hazard Identification &amp; Risk Assessment</strong>
             <span>Nhận diện &amp; đánh giá rủi ro</span>
           </div>
         </div>
@@ -1342,6 +1647,55 @@
     </div>
   </section>
 
+  <!-- ─── Slide Voice: Keyword Google AI Studio ─── -->
+  <section id="slide-voice">
+    <div class="section-inner">
+      <p class="eyebrow fade-up">GỢI Ý keyword để tạo voice thu hút</p>
+      <h2 class="section-title fade-up" style="transition-delay:.1s">Keyword tạo Voice</h2>
+      <div class="divider fade-in" style="transition-delay:.2s"></div>
+      <div class="kw-layout">
+        <div class="kw-tool-card stagger-child">
+          <div class="kw-tool-num">03</div>
+          <div class="kw-tool-name">Google AI Studio</div>
+          <div class="kw-tool-role">Tạo VOICE</div>
+          <div class="kw-tool-platform">Miễn phí  •  AI tự động</div>
+        </div>
+        <div class="kw-right stagger-child">
+          <div class="voice-params">
+            <div class="voice-param-item">
+              <span class="voice-param-label">Scene</span>
+              <span class="voice-param-desc">Đóng vai là chuyên viên đào tạo vận hành trong nhà máy</span>
+            </div>
+            <div class="voice-param-item">
+              <span class="voice-param-label">Sample context</span>
+              <span class="voice-param-desc">Giọng đọc rõ ràng, mang tính hướng dẫn</span>
+            </div>
+            <div class="voice-param-item">
+              <span class="voice-param-label">Script</span>
+              <span class="voice-param-desc">Ưu tiên các hành động cụ thể thay vì mô tả chung</span>
+            </div>
+          </div>
+          <p class="kw-label" style="margin-top:28px;">Prompt mẫu</p>
+          <div class="voice-prompt-block">
+            <div class="voice-prompt-header">
+              <span class="voice-prompt-icon">✦</span>
+              <span>Gợi ý prompt</span>
+            </div>
+            <p class="voice-prompt-text">Đóng vai trò là giảng viên đào tạo nội bộ, hãy chuyển nội dung thành kịch bản SOP với các yêu cầu:</p>
+            <ul class="voice-prompt-list">
+              <li><em>Trình bày theo từng bước rõ ràng, đúng trình tự vận hành</em></li>
+              <li><em>Nội dung bám sát thực tế, đúng tiêu chuẩn và dễ áp dụng</em></li>
+              <li><em>Sử dụng từ ngữ tự nhiên, câu nối mượt, giọng đọc thân thiện</em></li>
+              <li><em>Câu ngắn gọn, rõ ý, dễ đọc thành voice</em></li>
+              <li><em>Nhấn mạnh các điểm quan trọng và bước cần kiểm soát</em></li>
+              <li><em>Tập trung vào an toàn và tuân thủ LOTO trong toàn bộ quy trình</em></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ─── Slide 9: CTA ─── -->
   <section id="slide-9">
     <div id="slide-9-glow"></div>
@@ -1372,19 +1726,39 @@
 
   <!-- ─── JavaScript ─── -->
   <script>
-    /* Nav scroll */
-    document.querySelectorAll('.nav-link[data-target]').forEach(btn => {
+    /* ── Nav: smooth scroll for all data-target buttons (links + CTA) ── */
+    document.querySelectorAll('[data-target]').forEach(btn => {
       btn.addEventListener('click', () => {
         document.getElementById(btn.dataset.target)?.scrollIntoView({ behavior: 'smooth' });
       });
     });
 
-    /* Scroll animations */
+    /* ── Nav: section → group mapping ── */
+    const sectionGroup = {
+      'slide-1': 'intro',   'slide-2': 'intro',
+      'slide-3': 'content', 'slide-4': 'content',
+      'slide-5': 'technical','slide-6': 'technical',
+      'slide-7': 'keywords','slide-8': 'keywords','slide-voice': 'keywords',
+      'slide-9': null
+    };
+
+    /* ── Scroll animations + active state ── */
     const navLinks = document.querySelectorAll('.nav-link');
+    const navGroups = document.querySelectorAll('.nav-group');
+
     const scrollObs = new IntersectionObserver(entries => {
       entries.forEach(entry => {
         if (!entry.isIntersecting) return;
-        navLinks.forEach(l => l.classList.toggle('active', l.dataset.target === entry.target.id));
+        const sid = entry.target.id;
+
+        /* active nav-link */
+        navLinks.forEach(l => l.classList.toggle('active', l.dataset.target === sid));
+
+        /* active group */
+        const gid = sectionGroup[sid] || null;
+        navGroups.forEach(g => g.classList.toggle('active-group', g.dataset.group === gid));
+
+        /* animate section children */
         entry.target.querySelectorAll('.fade-up, .fade-in').forEach(el => el.classList.add('visible'));
         entry.target.querySelectorAll('.stagger-child').forEach((el, i) => {
           el.style.transition = `opacity .65s ease ${i*85}ms, transform .65s ease ${i*85}ms`;
