@@ -1148,6 +1148,263 @@
       font-style: normal;
     }
 
+    /* ══════════════════════════════════════════════
+       SLIDE RANK — XẾP LOẠI VIDEO SOP
+    ══════════════════════════════════════════════ */
+    #slide-rank { background: transparent; }
+
+    .rank-header-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 6px;
+    }
+    .rank-badge-num {
+      font-family: 'Space Mono', monospace;
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--g-bright);
+      line-height: 1;
+      text-shadow: 0 0 24px rgba(0,224,130,0.45);
+      flex-shrink: 0;
+    }
+    .rank-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--g-mid);
+    }
+    .rank-title {
+      font-family: 'Be Vietnam Pro', sans-serif;
+      font-size: clamp(20px, 3vw, 32px);
+      font-weight: 800;
+      color: var(--txt-hi);
+      line-height: 1.15;
+      letter-spacing: -0.5px;
+    }
+    .rank-subtitle {
+      font-size: 13px;
+      color: var(--txt-muted);
+      margin-top: 6px;
+      margin-bottom: 22px;
+      line-height: 1.65;
+    }
+
+    /* 3-column tier grid */
+    .rank-tier-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .rank-tier {
+      border-radius: var(--r-lg);
+      border: 1px solid;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(12px);
+      transition: transform .25s ease, box-shadow .25s ease;
+      position: relative;
+    }
+    .rank-tier:hover {
+      transform: translateY(-4px);
+    }
+
+    /* Tier C */
+    .rank-tier-c {
+      background: linear-gradient(160deg, rgba(120,200,160,0.07) 0%, rgba(0,40,20,0.18) 100%);
+      border-color: rgba(100,180,130,0.22);
+    }
+    .rank-tier-c:hover { box-shadow: 0 12px 40px rgba(100,180,130,0.18); }
+
+    /* Tier B */
+    .rank-tier-b {
+      background: linear-gradient(160deg, rgba(56,130,246,0.09) 0%, rgba(0,20,60,0.22) 100%);
+      border-color: rgba(56,130,246,0.28);
+    }
+    .rank-tier-b:hover { box-shadow: 0 12px 40px rgba(56,130,246,0.20); }
+
+    /* Tier A */
+    .rank-tier-a {
+      background: linear-gradient(160deg, rgba(250,180,60,0.10) 0%, rgba(60,30,0,0.22) 100%);
+      border-color: rgba(250,180,60,0.30);
+    }
+    .rank-tier-a:hover { box-shadow: 0 16px 48px rgba(250,180,60,0.22); }
+
+    /* Tier header */
+    .rank-tier-head {
+      padding: 16px 18px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      position: relative;
+    }
+    .rank-tier-label {
+      font-family: 'Space Mono', monospace;
+      font-size: 28px;
+      font-weight: 700;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+    .rank-tier-c .rank-tier-label { color: #6fd9a8; text-shadow: 0 0 18px rgba(111,217,168,0.5); }
+    .rank-tier-b .rank-tier-label { color: #6ab4ff; text-shadow: 0 0 18px rgba(106,180,255,0.5); }
+    .rank-tier-a .rank-tier-label { color: #f4c842; text-shadow: 0 0 18px rgba(244,200,66,0.5); }
+
+    .rank-tier-cond {
+      font-size: 10.5px;
+      font-style: italic;
+      color: var(--txt-dim);
+      line-height: 1.5;
+    }
+    .rank-tier-pts {
+      position: absolute;
+      top: 14px; right: 16px;
+      font-family: 'Space Mono', monospace;
+      font-size: 26px;
+      font-weight: 700;
+      opacity: 0.25;
+    }
+    .rank-tier-c .rank-tier-pts { color: #6fd9a8; }
+    .rank-tier-b .rank-tier-pts { color: #6ab4ff; }
+    .rank-tier-a .rank-tier-pts { color: #f4c842; }
+
+    /* Tier body items */
+    .rank-tier-body {
+      padding: 14px 18px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+    }
+    .rank-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 9px;
+      font-size: 12.5px;
+      color: var(--txt-body);
+      line-height: 1.55;
+    }
+    .rank-item-dot {
+      width: 6px; height: 6px;
+      border-radius: 1px;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+    .rank-tier-c .rank-item-dot { background: #6fd9a8; }
+    .rank-tier-b .rank-item-dot { background: #6ab4ff; }
+    .rank-tier-a .rank-item-dot { background: #f4c842; }
+
+    /* Score bar at bottom */
+    .rank-score-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: center;
+      margin-bottom: 0;
+    }
+    .rank-score-pills {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .rank-score-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 18px;
+      border-radius: 30px;
+      border: 1px solid;
+      font-family: 'Space Mono', monospace;
+    }
+    .rank-score-pill-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      opacity: 0.65;
+    }
+    .rank-score-pill-pts {
+      font-size: 17px;
+      font-weight: 700;
+    }
+    .pill-c { background: rgba(111,217,168,0.08); border-color: rgba(111,217,168,0.25); }
+    .pill-c .rank-score-pill-pts { color: #6fd9a8; }
+    .pill-b { background: rgba(106,180,255,0.08); border-color: rgba(106,180,255,0.25); }
+    .pill-b .rank-score-pill-pts { color: #6ab4ff; }
+    .pill-a { background: rgba(244,200,66,0.09); border-color: rgba(244,200,66,0.28); }
+    .pill-a .rank-score-pill-pts { color: #f4c842; }
+
+    .rank-total-box {
+      background: linear-gradient(135deg, rgba(0,180,104,0.08), rgba(0,40,20,0.22));
+      border: 1px solid var(--u-border-hi);
+      border-radius: var(--r-md);
+      padding: 14px 20px;
+      text-align: center;
+      min-width: 200px;
+    }
+    .rank-total-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--g-muted);
+      margin-bottom: 4px;
+    }
+    .rank-total-formula {
+      font-size: 12px;
+      color: var(--txt-muted);
+      line-height: 1.5;
+    }
+    .rank-total-cap {
+      font-size: 11px;
+      font-style: italic;
+      color: var(--txt-dim);
+      margin-top: 4px;
+    }
+    .rank-bonus-note {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 12px 18px;
+      background: rgba(244,200,66,0.06);
+      border: 1px solid rgba(244,200,66,0.18);
+      border-radius: var(--r-md);
+      margin-top: 14px;
+      font-size: 12.5px;
+      color: var(--txt-muted);
+      line-height: 1.6;
+    }
+    .rank-bonus-icon {
+      font-size: 16px;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .rank-notice-box {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 14px 18px;
+      background: rgba(0,180,104,0.06);
+      border: 1px solid var(--u-border-hi);
+      border-radius: var(--r-md);
+      margin-top: 12px;
+      font-size: 12.5px;
+      color: var(--txt-muted);
+      line-height: 1.65;
+    }
+    .rank-notice-icon {
+      font-size: 14px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      color: var(--g-bright);
+    }
+
+    @media (max-width: 768px) {
+      .rank-tier-grid { grid-template-columns: 1fr; }
+      .rank-score-row { grid-template-columns: 1fr; }
+      .rank-total-box { min-width: unset; }
+    }
+
     #slide-9-glow {
       position: absolute;
       inset: 0;
@@ -1358,6 +1615,19 @@
         <button class="nav-link" data-target="slide-7"><span class="nav-link-dot"></span>CapCut</button>
         <button class="nav-link" data-target="slide-8"><span class="nav-link-dot"></span>Canva</button>
         <button class="nav-link" data-target="slide-voice"><span class="nav-link-dot"></span>Voice</button>
+      </div>
+    </div>
+
+    <!-- Group: Xếp Loại -->
+    <div class="nav-group" data-group="ranking">
+      <button class="nav-group-btn" aria-haspopup="true">
+        Ranking
+        <svg class="nav-chevron" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 4l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+      <div class="nav-dropdown">
+        <button class="nav-link" data-target="slide-rank"><span class="nav-link-dot"></span>Xếp Loại Video</button>
       </div>
     </div>
 
@@ -1696,6 +1966,117 @@
     </div>
   </section>
 
+  <!-- ─── Slide Rank: Xếp Loại Video SOP ─── -->
+  <section id="slide-rank">
+    <div class="section-inner">
+
+      <div class="rank-header-row fade-up">
+        <div class="rank-badge-num">3</div>
+        <div>
+          <p class="rank-eyebrow">Chương trình đánh giá</p>
+          <h2 class="rank-title">XẾP LOẠI VIDEO SOP <span style="color:var(--g-bright);">× TEAM PROGRAM</span></h2>
+        </div>
+      </div>
+      <p class="rank-subtitle fade-up" style="transition-delay:.1s">
+        Việc đánh giá chất lượng Video SOP sẽ diễn ra hằng tháng, bởi E&amp;T Coordinator.<br>
+        Có 3 cấp độ video, dựa vào các tiêu chí sau:
+      </p>
+      <div class="divider fade-in" style="transition-delay:.15s"></div>
+
+      <!-- 3-tier columns -->
+      <div class="rank-tier-grid">
+
+        <!-- Tier C -->
+        <div class="rank-tier rank-tier-c stagger-child">
+          <div class="rank-tier-head">
+            <div class="rank-tier-label">Loại C</div>
+            <div class="rank-tier-cond">Đạt 6/6 các điều kiện dưới đây</div>
+            <div class="rank-tier-pts">C</div>
+          </div>
+          <div class="rank-tier-body">
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Video rõ nét, đạt độ phân giải tối thiểu HD 720p</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Màu sắc video hài hòa, dễ nhìn, độ sáng ổn định</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Chữ rõ, dễ đọc, tốc độ chữ phù hợp — bao gồm phụ đề &amp; các hiệu ứng chữ</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Video lấy nét, ổn định, không rung, khung hình tốt</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Video phải đồng bộ kích thước, không quay ngang quay dọc gây khó chịu</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Giọng đọc to, rõ, dễ nghe</span></div>
+          </div>
+        </div>
+
+        <!-- Tier B -->
+        <div class="rank-tier rank-tier-b stagger-child">
+          <div class="rank-tier-head">
+            <div class="rank-tier-label">Loại B</div>
+            <div class="rank-tier-cond">Đạt Loại C và ít nhất 3 điều kiện dưới đây</div>
+            <div class="rank-tier-pts">B</div>
+          </div>
+          <div class="rank-tier-body">
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Video có độ phân giải cao HD 1080p &amp; tất cả hình ảnh hiển thị rõ nét, không bị mờ</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Nội dung được truyền đạt ngắn gọn, rõ ràng — đầy đủ nội dung &amp; thời lượng dưới 3 phút</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Tần suất công việc thường xuyên (nhiều hơn 2 lần/tuần)</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Có cảnh quay thực tế các bước thực hiện, giúp truyền tải các vấn đề cần nhấn mạnh</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Có hiệu ứng chuyển cảnh phù hợp và có phân đoạn rõ ràng giúp người xem dễ theo dõi</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Có phần tóm tắt thông tin &amp; những lưu ý quan trọng khi thực hiện công việc</span></div>
+          </div>
+        </div>
+
+        <!-- Tier A -->
+        <div class="rank-tier rank-tier-a stagger-child">
+          <div class="rank-tier-head">
+            <div class="rank-tier-label">Loại A</div>
+            <div class="rank-tier-cond">Đạt Loại B và ít nhất 3 điều kiện dưới đây</div>
+            <div class="rank-tier-pts">A</div>
+          </div>
+          <div class="rank-tier-body">
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Video có tính sáng tạo để thu hút người xem (thông qua các tình huống giả lập, câu chuyện thực tế...)</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Video có đi sâu vào giải thích nguyên lý của thiết bị hoặc process</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Video có sử dụng hình vẽ kỹ thuật (CAD, Adobe Effect, Inventor, Solidworks...)</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Video có liên quan đến startup, shutdown, troubleshooting, testing QMS, change size, calibration, measuring method, replacing, equipment handling, SHE, Q.</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span>Video bao gồm thông tin bổ sung để người xem có thể tìm hiểu thêm (thông tin SME, tài liệu khác...)</span></div>
+            <div class="rank-item"><span class="rank-item-dot"></span><span style="opacity:.45;font-style:italic;">N/A (chỉ cần đạt 3/5 điều kiện trên)</span></div>
+          </div>
+        </div>
+
+      </div><!-- /rank-tier-grid -->
+
+      <!-- Score + total -->
+      <div class="rank-score-row fade-up" style="transition-delay:.45s">
+        <div class="rank-score-pills">
+          <div class="rank-score-pill pill-c">
+            <span class="rank-score-pill-label">Loại C</span>
+            <span class="rank-score-pill-pts">2đ</span>
+          </div>
+          <div class="rank-score-pill pill-b">
+            <span class="rank-score-pill-label">Loại B</span>
+            <span class="rank-score-pill-pts">3đ</span>
+          </div>
+          <div class="rank-score-pill pill-a">
+            <span class="rank-score-pill-label">Loại A</span>
+            <span class="rank-score-pill-pts">5đ</span>
+          </div>
+        </div>
+        <div class="rank-total-box">
+          <p class="rank-total-label">Total Score</p>
+          <p class="rank-total-formula">= Tổng điểm từ mỗi video nộp trong tháng</p>
+          <p class="rank-total-cap">Total score không quá 10 điểm</p>
+        </div>
+      </div>
+
+      <!-- Bonus note -->
+      <div class="rank-bonus-note fade-up" style="transition-delay:.52s">
+        <span class="rank-bonus-icon">⭐</span>
+        <span>Trong trường hợp tất cả video nộp đều là <strong style="color:#f4c842;">Loại A</strong>, phòng ban sẽ được cộng thêm 2 điểm ở phần <em>Self-learning</em> như một sự ghi nhận nỗ lực vượt trội.</span>
+      </div>
+
+      <!-- Process notice -->
+      <div class="rank-notice-box fade-up" style="transition-delay:.58s">
+        <span class="rank-notice-icon">📅</span>
+        <span>Vào ngày <strong style="color:var(--g-bright);">9 hằng tháng</strong>, E&amp;T Coordinator sẽ filter những videos được đánh dấu là <strong>"Needs Approval"</strong> để chấm điểm &amp; ghi nhận điểm trực tiếp tại video.</span>
+      </div>
+
+    </div>
+  </section>
+
   <!-- ─── Slide 9: CTA ─── -->
   <section id="slide-9">
     <div id="slide-9-glow"></div>
@@ -1739,6 +2120,7 @@
       'slide-3': 'content', 'slide-4': 'content',
       'slide-5': 'technical','slide-6': 'technical',
       'slide-7': 'keywords','slide-8': 'keywords','slide-voice': 'keywords',
+      'slide-rank': 'ranking',
       'slide-9': null
     };
 
